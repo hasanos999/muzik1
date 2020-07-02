@@ -3,14 +3,28 @@ const fs = require("fs")
 
 module.exports.run = async (client, message, args) => {
 
-  if(!message.member.voice.channel) return message.channel.send(`<:voice:720120618275831869> Bir müzik durdurmak için sesli bir kanalda bulunman gerekiyor.`)
-    
-  if(!client.player.isPlaying(message.guild.id)) return message.channel.send(`<:voice:720120618275831869> Şu anda durdurabilmem için bir müzik çalmıyor.`)
   
-  let song = await client.player.pause(message.guild.id);
-            
-  message.channel.send(`${client.emotes.stop} Çalan şarkı durduruldu.`)
+  const embed = new Discord.MessageEmbed()
+.setAuthor(client.user.username)
+.setFooter(message.guild.name)
+.setColor('GREEN')
+.setTimestamp()
+  
+  
+  if(!message.member.voice.channel) return message.channel.send(`<:voice:720120618275831869> Sesli bir kanalda bulunman gerekiyor.`)
     
+  if(!client.player.isPlaying(message.guild.id)) return message.channel.send(`<:voice:720120618275831869> Bir müzik çalmıyor.`)
+  
+  let çalan = await client.player.nowPlaying(message.guild.id);
+  message.channel.send(new Discord.MessageEmbed()
+.setAuthor(client.user.username)
+.setFooter(message.guild.name)
+.setColor('GREEN')
+.setTimestamp()
+.setDescription(`<:invisible:720120617772384269> \`${çalan.name}\`  isimli şarkı durduruldu.`))
+  let song = await client.player.pause(message.guild.id);
+  
+  
 }
 
 module.exports.config = {

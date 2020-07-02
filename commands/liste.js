@@ -3,11 +3,11 @@ const fs = require("fs")
 
 module.exports.run = async (client, message, args) => {
 
-    if(!message.member.voice.channel) return message.channel.send({embed: {color: client.colors.error, description: `${client.emotes.error} | Sesli kanalda değilsin!` }})
+    if(!message.member.voice.channel) return message.channel.send(`<:voice:720120618275831869> Sesli bir kanalda bulunman gerekiyor.`)
   
     let queue = client.player.getQueue(message.guild.id);
 
-    if(!queue) return message.channel.send({embed: {color: client.colors.error, description: `${client.emotes.error} | Müzik çalmıyor!` }})
+    if(!queue) return message.channel.send(`<:voice:720120618275831869> Bir müzik çalmıyor.`)
 
     let q = queue.songs.map((song, i) => {
         return `${i === 0 ? 'Şimdiki' : `${i+1}`}- ${song.name} : ${song.author}`

@@ -3,8 +3,10 @@ const fs = require("fs")
 
 module.exports.run = async (client, message, args) => {
 let queue = args.join(" ");
-if(!message.member.voice.channel) return message.channel.send({embed: {color: client.colors.error, description: `${client.emotes.error} | Sesli kanalda değilsin!` }})
-  if (!queue) return message.channel.send({embed: {color: client.colors.error, description: `${client.emotes.error} | Lütfen aramak için bir şey girin girin!` }})
+  
+  if(!message.member.voice.channel) return message.channel.send(`<:voice:720120618275831869> Sesli bir kanalda bulunman gerekiyor.`)
+
+  if (!queue) return message.channel.send(`<:youtube:728152662125576232> Arayabilmem için bir şarkı ismi girmelisin.`)
 
 let playing = client.player.isPlaying(message.guild.id);
 
