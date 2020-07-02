@@ -40,7 +40,6 @@ client.on("ready", () => {
     //It will count all voice channels in which bot is connected, if none it will return 0
     let playing = client.voice.connections.size; 
     //It will set the bot status to streaming
-    client.user.setPresence({ activity: { name: `*yardım`, type: "STREAMING", url: "https://twitch.tv/" } })
 
 });
 
