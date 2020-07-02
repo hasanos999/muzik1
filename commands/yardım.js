@@ -5,10 +5,9 @@ module.exports.run = async (client, message, args, prefix) => {
 const embed = new Discord.MessageEmbed()
 .setAuthor(client.user.username)
 .setFooter(message.guild.name)
-.setColor('GREEN')
 .setTimestamp()
 
-message.channel.send(client.commands.map(c => c.config.name))
+message.channel.send(embed.setDescription('`'+client.commands.map(c => c.config.name).join('` `')+'`'))
   
 } 
 

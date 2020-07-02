@@ -7,7 +7,7 @@ module.exports.run = async (client, message, args) => {
 const embed = new Discord.MessageEmbed()
 .setAuthor(client.user.username)
 .setFooter(message.guild.name)
-.setColor('GREEN')
+.setColor('#9dfca0')
 .setTimestamp()
   
   
@@ -23,6 +23,6 @@ const embed = new Discord.MessageEmbed()
 }
 
 module.exports.config = {
-  name: "devamet",
-  aliases: ['devam-et']
+  name: "devam-et",
+  aliases: ['devamet']
 }

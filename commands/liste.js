@@ -7,7 +7,7 @@ module.exports.run = async (client, message, args) => {
 const embed = new Discord.MessageEmbed()
 .setAuthor(client.user.username)
 .setFooter(message.guild.name)
-.setColor('GREEN')
+.setColor('#9dfca0')
 .setTimestamp()
   
   
@@ -18,8 +18,9 @@ const embed = new Discord.MessageEmbed()
     if(!queue) return message.channel.send(`<:voice:720120618275831869> Bir müzik çalmıyor.`)
 
     let q = queue.songs.map((song, i) => {
-        return `${i === 0 ? '1' : `${i+1}`}: **${song.name}** 
+        return `${i === 0 ? '1' : `${i+1}`}: \`${song.name}\`
 Kanal: **${song.author}**
+Çaldıran: **${song.requestedBy}**
 `
     }).join('\n');  
        message.channel.send(embed.setDescription(q))

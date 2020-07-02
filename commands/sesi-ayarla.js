@@ -7,7 +7,7 @@ module.exports.run = async (client, message, args) => {
 const embed = new Discord.MessageEmbed()
 .setAuthor(client.user.username)
 .setFooter(message.guild.name)
-.setColor('GREEN')
+.setColor('#9dfca0')
 .setTimestamp()
   
   
@@ -21,7 +21,7 @@ const embed = new Discord.MessageEmbed()
   
   client.player.setVolume(message.guild.id, volume);
     
-  message.channel.send(embed.setDescription(`<:invisible:720120617772384269> Çalınan şarkılar için ses seviyesi **${args.join(" ")}** olarak ayarlandı.`))
+  message.channel.send(embed.setDescription(`<:invisible:720120617772384269> Çalınan şarkılar için ses seviyesi \`${args.join(" ")}\` olarak ayarlandı.`))
 
 
 }

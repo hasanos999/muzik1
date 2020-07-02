@@ -7,7 +7,7 @@ module.exports.run = async (client, message, args) => {
 const embed = new Discord.MessageEmbed()
 .setAuthor(client.user.username)
 .setFooter(message.guild.name)
-.setColor('GREEN')
+.setColor('#9dfca0')
 .setTimestamp()
   
   
@@ -17,7 +17,7 @@ const embed = new Discord.MessageEmbed()
   
   let song = await client.player.stop(message.guild.id);
 
-  message.channel.send(embed.setDescription(`<:voice:720120618275831869> ${client.user.username} sesli kanaldan ayrılıyor.`))
+  message.channel.send(embed.setDescription(`<:voice:720120618275831869> ${client.user.username} Çalınan şarkı iptal edildi.`))
 
 
 }

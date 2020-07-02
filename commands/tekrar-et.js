@@ -7,7 +7,7 @@ module.exports.run = async (client, message, args) => {
 const embed = new Discord.MessageEmbed()
 .setAuthor(client.user.username)
 .setFooter(message.guild.name)
-.setColor('GREEN')
+.setColor('#9dfca0')
 .setTimestamp()
   
 
@@ -20,11 +20,11 @@ client.player.setRepeatMode(message.guild.id, true);
  // Get the current song
  let song = await client.player.nowPlaying(message.guild.id);
   
- message.channel.send(embed.setDescription(`<:invisible:720120617772384269> **${song.name}** isimli şarkı tekrar oynatılacak.`))
+ message.channel.send(embed.setDescription(`<:invisible:720120617772384269> \`${song.name}\` isimli şarkı tekrar oynatılacak.`))
                       
                       }
 
 module.exports.config = {
-  name: "tekraret",
-  aliases: ['tekrar-et']
+  name: "tekrar-et",
+  aliases: ['tekraret']
 }
