@@ -4,7 +4,7 @@ const fs = require("fs")
 module.exports.run = async (client, message, args) => {
   
   
-    const embed = new Discord.MessageEmbed()
+const embed = new Discord.MessageEmbed()
 .setAuthor(client.user.username)
 .setFooter(message.guild.name)
 .setColor('GREEN')
@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args) => {
   
   let song = await client.player.skip(message.guild.id);
 
-  message.channel.send({embed: {color: client.colors.success, description: `${client.emotes.success} | Geçildi:\n${song.name}` }})
+  message.channel.send(embed.setDescription(`<:invisible:720120617772384269> **${song.name}** isimli şarkı geçildi.`))
 
 
 }

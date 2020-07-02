@@ -2,13 +2,13 @@ const Discord = require("discord.js")
 const fs = require("fs")
 module.exports.run = async (client, message, args, prefix) => {
   
-const exampleEmbed = new Discord.MessageEmbed()
-	.setColor('#0099ff')
-        .setTitle(`Komutlarımız **${client.user.username}** BOT!`)
-        .setDescription(`${client.commands.map(c => c.config.name)}`)
-	.setTimestamp()
+const embed = new Discord.MessageEmbed()
+.setAuthor(client.user.username)
+.setFooter(message.guild.name)
+.setColor('GREEN')
+.setTimestamp()
 
-message.channel.send(exampleEmbed)
+message.channel.send(client.commands.map(c => c.config.name))
   
 } 
 

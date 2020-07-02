@@ -3,21 +3,30 @@ const fs = require("fs")
 
 module.exports.run = async (client, message, args) => {
 
-  if(!message.member.voice.channel) return message.channel.send({embed: {color: client.colors.error, description: `${client.emotes.error} | Sesli kanalda değilsin!` }})
+  
+const embed = new Discord.MessageEmbed()
+.setAuthor(client.user.username)
+.setFooter(message.guild.name)
+.setColor('GREEN')
+.setTimestamp()
+  
+  
+  if(!message.member.voice.channel) return message.channel.send(`<:voice:720120618275831869> Sesli bir kanalda bulunman gerekiyor.`)
     
-  if(!client.player.isPlaying(message.guild.id)) return message.channel.send({embed: {color: client.colors.error, description: `${client.emotes.error} | Müzik çalmıyor!` }})
+  if(!client.player.isPlaying(message.guild.id)) return message.channel.send(`<:voice:720120618275831869> Bir müzik çalmıyor.`)
+  
   let volume = parseInt(args.join(" "));
-  if (!volume) return message.channel.send({embed: {color: client.colors.error, description: `${client.emotes.error} | Lütfen bir sayı giriniz!` }})
-  if (isNaN(args[0])) return message.channel.send({embed: {color: client.colors.error, description: `${client.emotes.error} | Lütfen geçerli bir sayı giriniz!` }})
+  if (!volume) return message.channel.send(`<:voice:720120618275831869> Sesi düzgünce ayarlayabilmem için bir sayı girmelisiniz.`)
+  if (isNaN(args[0])) return message.channel.send(`<:voice:720120618275831869> Lütfen sadece sayı girin.`)
   
   client.player.setVolume(message.guild.id, volume);
     
-  message.channel.send({embed: {color: client.colors.success, description: `${client.emotes.success} | Ses Seviyesi \`${args.join(" ")}\` ` }})
+  message.channel.send(embed.setDescription(`<:invisible:720120617772384269> Çalınan şarkılar için ses seviyesi **${args.join(" ")}** olarak ayarlandı.`))
 
 
 }
 
 module.exports.config = {
   name: "sesi-ayarla",
-  aliases: ['sesi-ayarla']
+  aliases: ['sesiayarla']
 }

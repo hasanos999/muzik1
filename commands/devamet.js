@@ -4,7 +4,7 @@ const fs = require("fs")
 module.exports.run = async (client, message, args) => {
   
   
-  const embed = new Discord.MessageEmbed()
+const embed = new Discord.MessageEmbed()
 .setAuthor(client.user.username)
 .setFooter(message.guild.name)
 .setColor('GREEN')
@@ -18,12 +18,7 @@ module.exports.run = async (client, message, args) => {
   let song = await client.player.resume(message.guild.id);
   let çalan = await client.player.nowPlaying(message.guild.id);
   
-  message.channel.send(new Discord.MessageEmbed()
-.setAuthor(client.user.username)
-.setFooter(message.guild.name)
-.setColor('GREEN')
-.setTimestamp()
-.setDescription(`<:invisible:720120617772384269> \`${çalan.name}\`  isimli şarkı devam ettiriliyor.`))
+  message.channel.send(embed.setDescription(`<:invisible:720120617772384269> \`${çalan.name}\`  isimli şarkı devam ettiriliyor.`))
     
 }
 
