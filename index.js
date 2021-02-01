@@ -2,12 +2,12 @@ const Discord = require("discord.js")
 const fs = require("fs")
 const client = new Discord.Client()
 
-const settings = require("./config/bot.json") //The bot connects using the configuration file
+const settings = require("./config/bot.json")
 
 
-const { Player } = require("discord-player"); //Create a new Player (Youtube API key is your Youtube Data v3 key)
+const { Player } = require("discord-player");
 
-const player = new Player(client, settings.youtube_api); //To easily access the player
+const player = new Player(client, settings.youtube_api);
 
 client.player = player;
 client.commands = new Discord.Collection();
@@ -16,13 +16,9 @@ client.emotes = require("./config/emojis.json");
 client.colors = require("./config/colors.json");
 
 fs.readdir("./commands/", (err, files) => {
-    //it will filter all the files in commands directory with extension .js
     let jsfile = files.filter(f => f.split(".").pop() === "js")
-    //this will be executed if there is no files in command folder with extention .js
     if(jsfile.length <= 0) return console.log("Could not find any commands!");
-    //it's similar to for loop
     jsfile.forEach((f, i) => { 
-     //it will log all the file names with extension .js
     console.log(`Loaded ${f}!`);
         
     let pull = require(`./commands/${f}`);
@@ -36,10 +32,8 @@ fs.readdir("./commands/", (err, files) => {
 
 client.on("ready", () => {
 
-    console.log("Bot çalışıyor"); //If the bot is ready it sends a message in the console
-    //It will count all voice channels in which bot is connected, if none it will return 0
+    console.log("Bot çalışıyor");
     let playing = client.voice.connections.size; 
-    //It will set the bot status to streaming
 
 });
 
@@ -58,4 +52,4 @@ client.on('message', async message => {
         
 });
 
-client.login(settings.token_bot); //This is the heart of the bot
+client.login(settings.token_bot);
