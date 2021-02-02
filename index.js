@@ -1,55 +1,54 @@
-const Discord = require("discord.js")
-const fs = require("fs")
-const client = new Discord.Client()
+/**
+ * @file The starting point of Bastion
+ * @author Sankarsan Kampa (a.k.a k3rn31p4nic)
+ * @license GPL-3.0
+ */
 
-const settings = require("./config/bot.json")
+const Tesseract = xrequire('tesseract');
+const fs = require('fs');
+const YAML = require('yaml');
+const util = xrequire('util');
+const exec = util.promisify(xrequire('child_process').exec);
+const log = xrequire('./handlers/logHandler');
+const compareVersion = xrequire('./utils/compareVersion');
+
+/* eslint-disable no-sync */
+const configurationsFile = fs.readFileSync('./settings/configurations.yaml', 'utf8');
+const credentialsFile = fs.readFileSync('./settings/credentials.yaml', 'utf8');
+/* eslint-enable no-sync */
+const configurations = YAML.parse(configurationsFile);
+const credentials = YAML.parse(credentialsFile);
 
 
-const { Player } = require("discord-player");
+log.info('Checking for updates...');
 
-const player = new Player(client, settings.youtube_api);
+compareVersion().then(async res => {
+  if (res === 1) {
+    log.info('A new version of Bastion is avaiable.');
+    if (configurations.autoUpdate) {
+      const { stderr } = await exec('git pull', { timeout: 60000 });
 
-client.player = player;
-client.commands = new Discord.Collection();
-client.aliases =  new Discord.Collection();
-client.emotes = require("./config/emojis.json");
-client.colors = require("./config/colors.json");
+      if (stderr) log.info('Unable to update. Please try updating manually.');
+      else log.info('Successfully installed all updates.');
+    }
+  }
+  else {
+    log.info('Bastion is up to date.');
+  }
 
-fs.readdir("./commands/", (err, files) => {
-    let jsfile = files.filter(f => f.split(".").pop() === "js")
-    if(jsfile.length <= 0) return console.log("Could not find any commands!");
-    jsfile.forEach((f, i) => { 
-    console.log(`Loaded ${f}!`);
-        
-    let pull = require(`./commands/${f}`);
-   
-    client.commands.set(pull.config.name, pull);  
-    pull.config.aliases.forEach(alias => {
-    client.aliases.set(alias, pull.config.name)
-                
-    });
-})});
+  log.info('Starting Bastion...');
 
-client.on("ready", () => {
 
-    console.log("Bot çalışıyor");
-    let playing = client.voice.connections.size; 
+  const Manager = new Tesseract.ShardingManager('./bastion.js', {
+    totalShards: configurations.shardCount,
+    token: credentials.token
+  });
 
+  Manager.spawn();
+
+  Manager.on('launch', shard => {
+    log.info(`Launching Shard ${shard.id} [ ${shard.id + 1} of ${Manager.totalShards} ]`);
+  });
+}).catch(e => {
+  log.error(`Unable to check for updates.\nMake sure you've an active internet connection.\n\n${e}`);
 });
-
-client.on('message', async message => {
-    
-    let prefix = settings.prefix
-        
-    let messageArray = message.content.split(" ")
-    let cmd = messageArray[0].toLowerCase();
-    let args = messageArray.slice(1);
-      
-      
-    if(!message.content.startsWith(prefix)) return;
-    let commandfile = client.commands.get(cmd.slice(prefix.length)) || client.commands.get(client.aliases.get(cmd.slice(prefix.length)))
-    if(commandfile) commandfile.run(client,message,args,prefix);   
-        
-});
-
-client.login(settings.token_bot);
